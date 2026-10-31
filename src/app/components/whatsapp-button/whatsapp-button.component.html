@@ -1,0 +1,33 @@
+<div
+  class="whatsapp-float-wrapper"
+  [class.offset-for-widget]="hasVoiceWidgetConfigured()">
+  <a
+    [href]="whatsapp.chatUrl"
+    target="_blank"
+    rel="noopener noreferrer"
+    class="whatsapp-float-btn"
+    [attr.aria-label]="'Chat with CALLNIVO AI on WhatsApp at ' + whatsapp.displayNumber">
+
+    <!-- Subtle Ambient Glow Ring -->
+    <span class="wa-glow-ring" aria-hidden="true"></span>
+
+    <!-- Recognizable WhatsApp Vector Icon -->
+    <span class="wa-icon-circle" aria-hidden="true">
+      <svg
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="currentColor"
+        xmlns="http://www.w3.org/2000/svg">
+        <path
+          d="M12.031 2C6.508 2 2.023 6.485 2.023 12.008c0 1.766.461 3.49 1.337 5.011L2 22l5.122-1.343a9.969 9.969 0 0 0 4.909 1.298h.004c5.522 0 10.007-4.485 10.007-10.008 0-2.674-1.041-5.188-2.931-7.079A9.946 9.946 0 0 0 12.031 2Zm5.847 14.326c-.246.693-1.434 1.326-1.995 1.409-.511.076-1.158.108-1.869-.118-.431-.137-.983-.32-1.693-.627-2.98-1.287-4.926-4.29-5.075-4.488-.148-.198-1.211-1.612-1.211-3.074 0-1.463.766-2.182 1.038-2.479.272-.298.594-.372.792-.372.198 0 .396.002.569.01.183.009.427-.069.668.511.248.595.841 2.056.915 2.205.075.149.124.322.025.52-.099.198-.148.322-.297.495-.148.174-.312.388-.445.521-.149.148-.304.309-.131.606.173.297.769 1.269 1.651 2.055 1.135 1.012 2.091 1.326 2.388 1.475.297.148.47.124.643-.075.174-.198.742-.866.94-1.163.198-.298.396-.248.668-.149.273.099 1.732.817 2.029.966.297.148.495.223.569.346.074.124.074.718-.173 1.411Z" />
+      </svg>
+    </span>
+
+    <!-- Text Label & Readable Phone Number -->
+    <span class="wa-label-group">
+      <span class="wa-title">WhatsApp Us</span>
+      <span class="wa-number">{{ whatsapp.displayNumber }}</span>
+    </span>
+  </a>
+</div>

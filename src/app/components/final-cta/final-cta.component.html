@@ -1,0 +1,97 @@
+<section
+  class="final-cta-section section-padding"
+  aria-labelledby="final-cta-heading">
+  <div class="container">
+    <div class="cta-banner glass-panel">
+      <!-- Animated Glowing Aura & Particles -->
+      <div class="cta-glow-orb orb-left" aria-hidden="true"></div>
+      <div class="cta-glow-orb orb-right" aria-hidden="true"></div>
+      <div class="cta-particles" aria-hidden="true">
+        <span></span><span></span><span></span><span></span>
+      </div>
+
+      <div class="cta-content">
+        <div class="eyebrow-badge">
+          <span class="pulse-dot" aria-hidden="true"></span>
+          <span>EVERY CALL COUNTS</span>
+        </div>
+
+        <h2 id="final-cta-heading" class="cta-headline">
+          Ready to Rethink the Way<br />
+          <span class="text-gradient">Your Business Answers Calls?</span>
+        </h2>
+
+        <p class="cta-subtitle">
+          Experience how a custom-tailored AI receptionist can greet your callers, handle everyday questions, and organize customer inquiries around the clock.
+        </p>
+
+        <div class="cta-buttons">
+          <a
+            href="#live-demo"
+            class="btn btn-primary"
+            (click)="onTestAi($event)">
+            <span>Test Our AI</span>
+          </a>
+
+          <button
+            type="button"
+            class="btn btn-secondary"
+            (click)="onBookConsultation($event)">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+              <line x1="16" y1="2" x2="16" y2="6" />
+              <line x1="8" y1="2" x2="8" y2="6" />
+              <line x1="3" y1="10" x2="21" y2="10" />
+            </svg>
+            <span>Book a Consultation</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Honest Cal.com Setup Modal (When Booking URL is Not Yet Configured) -->
+  @if (uiState.bookingModalOpen()) {
+    <div
+      class="booking-modal-backdrop"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="booking-modal-title"
+      (click)="uiState.closeBookingModal()">
+      <div class="booking-modal glass-panel" (click)="$event.stopPropagation()">
+        <div class="modal-header">
+          <span class="modal-badge">CALENDAR SETUP STATUS</span>
+          <button
+            type="button"
+            class="modal-close"
+            (click)="uiState.closeBookingModal()"
+            aria-label="Close modal">
+            ✕
+          </button>
+        </div>
+        <h3 id="booking-modal-title">Consultation Calendar Coming Soon</h3>
+        <p>
+          A live Cal.com consultation link has not been configured on this deployment yet. Rather than sending you to an invalid external link, we’ve kept this scheduling trigger in setup mode.
+        </p>
+        <p class="config-note">
+          <strong>For administrators:</strong> Add your public Cal.com URL to
+          <code>calComBookingUrl</code> in <code>src/app/config/integrations.config.ts</code> to enable direct calendar booking.
+        </p>
+        <div class="modal-actions">
+          <a
+            href="#contact"
+            class="btn btn-primary"
+            (click)="goToContactFromModal($event)">
+            Go to Contact Section
+          </a>
+          <button
+            type="button"
+            class="btn btn-secondary"
+            (click)="uiState.closeBookingModal()">
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+  }
+</section>

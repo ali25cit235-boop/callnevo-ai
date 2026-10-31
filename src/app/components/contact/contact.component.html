@@ -1,0 +1,229 @@
+<section
+  id="contact"
+  class="contact-section section-padding"
+  aria-labelledby="contact-section-title">
+  <div class="container">
+    <div class="contact-grid">
+      <!-- Left Column: Context & Integration Transparency -->
+      <div class="contact-info-column">
+        <div class="eyebrow-badge">
+          <span class="pulse-dot" aria-hidden="true"></span>
+          <span>GET IN TOUCH</span>
+        </div>
+
+        <h2 id="contact-section-title" class="section-title">
+          Let’s Design Your
+          <span class="text-gradient">AI Receptionist.</span>
+        </h2>
+
+        <p class="section-subtitle">
+          Share a few details about your business, call volume, and the types of conversations you want your AI receptionist to support.
+        </p>
+
+        <div class="info-cards-stack">
+          <!-- Direct Official WhatsApp Contact Card -->
+          <a
+            [href]="whatsapp.chatUrl"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="info-card whatsapp-contact-card glass-panel"
+            [attr.aria-label]="'Message CALLNIVO AI on WhatsApp at ' + whatsapp.displayNumber">
+            <div class="info-icon wa-icon" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12.031 2C6.508 2 2.023 6.485 2.023 12.008c0 1.766.461 3.49 1.337 5.011L2 22l5.122-1.343a9.969 9.969 0 0 0 4.909 1.298h.004c5.522 0 10.007-4.485 10.007-10.008 0-2.674-1.041-5.188-2.931-7.079A9.946 9.946 0 0 0 12.031 2Zm5.847 14.326c-.246.693-1.434 1.326-1.995 1.409-.511.076-1.158.108-1.869-.118-.431-.137-.983-.32-1.693-.627-2.98-1.287-4.926-4.29-5.075-4.488-.148-.198-1.211-1.612-1.211-3.074 0-1.463.766-2.182 1.038-2.479.272-.298.594-.372.792-.372.198 0 .396.002.569.01.183.009.427-.069.668.511.248.595.841 2.056.915 2.205.075.149.124.322.025.52-.099.198-.148.322-.297.495-.148.174-.312.388-.445.521-.149.148-.304.309-.131.606.173.297.769 1.269 1.651 2.055 1.135 1.012 2.091 1.326 2.388 1.475.297.148.47.124.643-.075.174-.198.742-.866.94-1.163.198-.298.396-.248.668-.149.273.099 1.732.817 2.029.966.297.148.495.223.569.346.074.124.074.718-.173 1.411Z" />
+              </svg>
+            </div>
+            <div class="wa-card-body">
+              <div class="wa-card-top">
+                <h3>Chat Directly on WhatsApp</h3>
+                <span class="wa-badge">Instant Direct Line</span>
+              </div>
+              <p class="wa-phone-display">{{ whatsapp.displayNumber }}</p>
+              <span class="wa-cta-link">Start WhatsApp Conversation →</span>
+            </div>
+          </a>
+
+          <div class="info-card glass-panel">
+            <div class="info-icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z" />
+                <path d="M19 10v2a7 7 0 0 1-14 0v-2" />
+                <line x1="12" x2="12" y1="19" y2="22" />
+              </svg>
+            </div>
+            <div>
+              <h3>Tailored Voice Workflows</h3>
+              <p>Custom greetings, routine FAQ answers, and structured call intake built around your business workflow.</p>
+            </div>
+          </div>
+
+          <div class="info-card glass-panel">
+            <div class="info-icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="2" y="3" width="20" height="14" rx="2" ry="2" />
+                <line x1="8" y1="21" x2="16" y2="21" />
+                <line x1="12" y1="17" x2="12" y2="21" />
+              </svg>
+            </div>
+            <div>
+              <h3>Works Alongside Your Team</h3>
+              <p>Support front-desk staff during busy daytime hours, lunch breaks, or evenings and weekends.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Honest Backend Status Indicator when unconfigured -->
+        @if (!isBackendConfigured()) {
+          <div class="backend-status-banner" role="status">
+            <div class="status-header">
+              <span class="status-dot"></span>
+              <span>Form Submission Endpoint Not Yet Connected</span>
+            </div>
+            <p>
+              Inquiries cannot be submitted yet because a backend form endpoint has not been configured for this deployment. Connect a Cloudflare Worker or form endpoint in
+              <code>src/app/config/integrations.config.ts</code> to enable live submissions.
+            </p>
+          </div>
+        }
+      </div>
+
+      <!-- Right Column: Reactive Contact Form -->
+      <div class="contact-form-column">
+        <form
+          [formGroup]="contactForm"
+          (ngSubmit)="onSubmit()"
+          class="contact-form glass-panel"
+          novalidate>
+
+          <div class="form-row-two">
+            <!-- Name -->
+            <div class="form-field">
+              <label for="contact-name">Your Name <span class="req">*</span></label>
+              <input
+                id="contact-name"
+                type="text"
+                formControlName="name"
+                placeholder="Alex Morgan"
+                [class.invalid]="isFieldInvalid('name')"
+                autocomplete="name" />
+              @if (isFieldInvalid('name')) {
+                <span class="field-error" role="alert">Please enter your name (at least 2 characters).</span>
+              }
+            </div>
+
+            <!-- Business Name -->
+            <div class="form-field">
+              <label for="contact-business">Business Name <span class="req">*</span></label>
+              <input
+                id="contact-business"
+                type="text"
+                formControlName="businessName"
+                placeholder="BrightSmile Dental Studio"
+                [class.invalid]="isFieldInvalid('businessName')"
+                autocomplete="organization" />
+              @if (isFieldInvalid('businessName')) {
+                <span class="field-error" role="alert">Please enter your business name.</span>
+              }
+            </div>
+          </div>
+
+          <div class="form-row-two">
+            <!-- Email -->
+            <div class="form-field">
+              <label for="contact-email">Email Address <span class="req">*</span></label>
+              <input
+                id="contact-email"
+                type="email"
+                formControlName="email"
+                placeholder="alex@yourbusiness.com"
+                [class.invalid]="isFieldInvalid('email')"
+                autocomplete="email" />
+              @if (isFieldInvalid('email')) {
+                <span class="field-error" role="alert">Please enter a valid email address.</span>
+              }
+            </div>
+
+            <!-- Phone (Optional) -->
+            <div class="form-field">
+              <label for="contact-phone">Phone <span class="opt">(optional)</span></label>
+              <input
+                id="contact-phone"
+                type="tel"
+                formControlName="phone"
+                placeholder="+1 (555) 000-0000"
+                [class.invalid]="isFieldInvalid('phone')"
+                autocomplete="tel" />
+              @if (isFieldInvalid('phone')) {
+                <span class="field-error" role="alert">Please enter a valid phone number format.</span>
+              }
+            </div>
+          </div>
+
+          <!-- Business Type -->
+          <div class="form-field">
+            <label for="contact-business-type">Business Type <span class="req">*</span></label>
+            <select
+              id="contact-business-type"
+              formControlName="businessType"
+              [class.invalid]="isFieldInvalid('businessType')">
+              <option value="" disabled>Select your industry...</option>
+              @for (type of businessTypes; track type) {
+                <option [value]="type">{{ type }}</option>
+              }
+            </select>
+            @if (isFieldInvalid('businessType')) {
+              <span class="field-error" role="alert">Please select your business type.</span>
+            }
+          </div>
+
+          <!-- Message -->
+          <div class="form-field">
+            <label for="contact-message">How Can CALLNIVO AI Help Your Business? <span class="req">*</span></label>
+            <textarea
+              id="contact-message"
+              rows="4"
+              formControlName="message"
+              placeholder="Tell us about the customer calls, questions, or appointment requests you would like an AI receptionist to handle..."
+              [class.invalid]="isFieldInvalid('message')"></textarea>
+            @if (isFieldInvalid('message')) {
+              <span class="field-error" role="alert">Please include a brief message (at least 12 characters).</span>
+            }
+          </div>
+
+          <!-- Submit Button -->
+          <button
+            type="submit"
+            class="btn btn-primary btn-submit-form"
+            [disabled]="submissionState() === 'submitting'">
+            @if (submissionState() === 'submitting') {
+              <span>Sending Inquiry...</span>
+            } @else if (isBackendConfigured()) {
+              <span>Send Inquiry</span>
+            } @else {
+              <span>Validate Inquiry (Submission Not Configured)</span>
+            }
+          </button>
+
+          <!-- Honest Submission State Feedback -->
+          @if (submissionState() === 'unconfigured') {
+            <div class="form-alert alert-unconfigured" role="alert">
+              <strong>Inquiries Cannot Be Submitted Yet:</strong> Your form fields passed validation, but no backend submission endpoint is currently configured for this website. Once a Cloudflare Worker or approved form service URL is added to <code>contactEndpointUrl</code> in <code>src/app/config/integrations.config.ts</code>, inquiries will be delivered directly.
+            </div>
+          }
+
+          @if (submissionState() === 'success') {
+            <div class="form-alert alert-success" role="status">
+              <strong>Inquiry Sent:</strong> Thank you for reaching out to CALLNIVO AI. Your message has been delivered to our team.
+            </div>
+          }
+
+          @if (submissionState() === 'error') {
+            <div class="form-alert alert-error" role="alert">
+              <strong>Submission Error:</strong> {{ errorMessage() }}
+            </div>
+          }
+        </form>
+      </div>
+    </div>
+  </div>
+</section>

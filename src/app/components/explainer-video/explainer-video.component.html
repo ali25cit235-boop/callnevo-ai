@@ -1,0 +1,175 @@
+<section
+  id="explainer"
+  class="explainer-section section-padding"
+  aria-labelledby="explainer-section-title">
+  <div class="container">
+    <!-- Section Header -->
+    <div class="section-header">
+      <div class="eyebrow-badge">
+        <span class="pulse-dot" aria-hidden="true"></span>
+        <span>PRODUCT SHOWCASE</span>
+      </div>
+      <h2 id="explainer-section-title" class="section-title">
+        See <span class="text-gradient">CALLNIVO AI</span> in Action
+      </h2>
+      <p class="section-subtitle">
+        Discover how an AI receptionist can answer customer inquiries, assist with appointments, and help businesses manage conversations.
+      </p>
+    </div>
+
+    <!-- Cinematic 16:9 Showcase Frame -->
+    <div class="cinema-frame-outer">
+      <div class="cinema-ambient-glow" aria-hidden="true"></div>
+
+      <div class="cinema-frame glass-panel">
+        @if (!isPlaying()) {
+          <!-- Click-to-Play Poster Experience (Does NOT autoplay until visitor clicks Play) -->
+          <div
+            class="poster-stage"
+            role="button"
+            tabindex="0"
+            aria-label="Play See CALLNIVO AI in Action explainer video with sound"
+            (click)="startExperience()"
+            (keydown.enter)="startExperience()"
+            (keydown.space)="startExperience(); $event.preventDefault()">
+
+            <!-- Poster Thumbnail Image + Subtle Cinematic Overlay -->
+            <div class="poster-visual" aria-hidden="true">
+              @if (config.posterUrl) {
+                <img
+                  class="poster-thumbnail-img"
+                  [src]="config.posterUrl"
+                  alt="CALLNIVO AI Explainer Video Poster"
+                  loading="lazy" />
+              }
+              <div class="poster-dark-overlay"></div>
+              <div class="poster-grid-lines"></div>
+            </div>
+
+            <!-- Center Large Play Trigger -->
+            <div class="play-button-group">
+              <span class="play-ring-pulse" aria-hidden="true"></span>
+              <div class="play-button-circle">
+                <svg width="30" height="30" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                  <polygon points="6 4 20 12 6 20 6 4" />
+                </svg>
+              </div>
+              <span class="play-caption">
+                Play Explainer Video
+              </span>
+            </div>
+
+            <!-- Bottom Poster Caption Bar -->
+            <div class="poster-bottom-bar">
+              <span class="bar-title">{{ config.title }}</span>
+              <span class="bar-badge">Click to Play • Audio Enabled • Fullscreen Ready</span>
+            </div>
+          </div>
+        } @else {
+          <!-- Active Player State -->
+          @if (config.mode === 'video' && config.mp4Url) {
+            <div class="video-player-wrap">
+              <video
+                #explainerVideoEl
+                class="native-explainer-video"
+                [src]="config.mp4Url"
+                [poster]="config.posterUrl"
+                controls
+                playsinline
+                preload="metadata">
+                <source [src]="config.mp4Url" type="video/mp4" />
+                Your browser does not support HTML5 video.
+              </video>
+            </div>
+          } @else if (config.mode === 'youtube' && safeYoutubeUrl()) {
+            <div class="video-player-wrap iframe-wrap">
+              <iframe
+                [src]="safeYoutubeUrl()"
+                [title]="config.title"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen>
+              </iframe>
+            </div>
+          } @else {
+            <!-- Illustrated Interactive 5-Step Walkthrough Player -->
+            @if (scenes[currentSceneIndex()]; as activeScene) {
+              <div class="walkthrough-player" role="region" aria-live="polite" aria-label="Interactive Product Walkthrough">
+                <div class="wt-topbar">
+                  <span class="wt-chapter-badge">{{ activeScene.badge }}</span>
+                  <div class="wt-playback-controls">
+                    <button
+                      type="button"
+                      class="btn-wt-auto"
+                      (click)="toggleAutoAdvance()">
+                      {{ autoAdvancing() ? 'Pause Auto-Play' : 'Resume Auto-Play' }}
+                    </button>
+                  </div>
+                </div>
+
+                <div class="wt-stage-body">
+                  <div class="wt-narrative-col">
+                    <h3 class="wt-scene-title">{{ activeScene.title }}</h3>
+                    <p class="wt-scene-narration">{{ activeScene.narration }}</p>
+
+                    <div class="wt-system-telemetry">
+                      <span class="sys-dot"></span>
+                      <span>{{ activeScene.systemNote }}</span>
+                    </div>
+                  </div>
+
+                  <div class="wt-visual-col">
+                    @if (activeScene.callerLine) {
+                      <div class="wt-dialogue-card caller">
+                        <span class="d-label">Customer</span>
+                        <p>{{ activeScene.callerLine }}</p>
+                      </div>
+                    }
+                    @if (activeScene.aiLine) {
+                      <div class="wt-dialogue-card ai">
+                        <span class="d-label">CALLNIVO AI Receptionist</span>
+                        <p>{{ activeScene.aiLine }}</p>
+                      </div>
+                    }
+                    @if (activeScene.step === 5) {
+                      <div class="wt-summary-preview">
+                        <div class="s-row"><span>Caller Intent:</span><strong>Consultation + Parking Info</strong></div>
+                        <div class="s-row"><span>Preferred Window:</span><strong>Next Week</strong></div>
+                        <div class="s-row"><span>Status:</span><strong class="cyan">Organized for Team Follow-Up</strong></div>
+                      </div>
+                    }
+                  </div>
+                </div>
+
+                <div class="wt-footer">
+                  <div class="wt-step-dots" role="tablist" aria-label="Walkthrough chapters">
+                    @for (scene of scenes; track scene.step; let idx = $index) {
+                      <button
+                        type="button"
+                        class="wt-step-btn"
+                        [class.active]="currentSceneIndex() === idx"
+                        role="tab"
+                        [attr.aria-selected]="currentSceneIndex() === idx"
+                        (click)="selectScene(idx)">
+                        <span>0{{ scene.step }}</span>
+                      </button>
+                    }
+                  </div>
+
+                  <div class="wt-nav-arrows">
+                    <button type="button" class="btn-arrow" (click)="prevScene()" aria-label="Previous step">
+                      ← Prev
+                    </button>
+                    <button type="button" class="btn-arrow primary" (click)="nextScene()" aria-label="Next step">
+                      Next Step →
+                    </button>
+                  </div>
+                </div>
+              </div>
+            }
+          }
+        }
+      </div>
+    </div>
+  </div>
+</section>

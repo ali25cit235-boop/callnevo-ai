@@ -1,0 +1,202 @@
+<section
+  id="live-demo"
+  class="voice-demo-section section-padding"
+  aria-labelledby="voice-demo-title">
+  <div class="container">
+    <!-- Section Header -->
+    <div class="section-header">
+      <div class="eyebrow-badge">
+        <span class="pulse-dot" aria-hidden="true"></span>
+        <span>INTERACTIVE VOICE EXPERIENCE</span>
+      </div>
+      <h2 id="voice-demo-title" class="section-title">
+        Experience <span class="text-gradient">CALLNIVO AI</span> Live
+      </h2>
+      <p class="section-subtitle">
+        Talk directly with our AI receptionist. Test different business scenarios and experience how AI can handle customer calls.
+      </p>
+    </div>
+
+    <!-- Main Conversion-Focused Demo Console -->
+    <div class="demo-console glass-panel">
+      <div class="console-ambient-top" aria-hidden="true"></div>
+
+      <!-- Top Console Bar -->
+      <div class="console-statusbar">
+        <div class="assistant-identity">
+          <span class="identity-badge">CALLNIVO AI</span>
+          <span class="identity-sub">Live AI Receptionist Widget</span>
+        </div>
+
+        @if (!widgetFailed()) {
+          <div class="status-pill configured">
+            <span class="dot"></span>
+            <span>Live Voice Widget Active (Bottom-Left)</span>
+          </div>
+        } @else {
+          <div class="status-pill coming-soon">
+            <span class="dot"></span>
+            <span>Widget Connection Unavailable</span>
+          </div>
+        }
+      </div>
+
+      <!-- Main Two-Column Console Body -->
+      <div class="console-grid">
+        <!-- Left Column: AI Orb, Acoustic Visualizer & Native Widget Guidance -->
+        <div class="console-stage">
+          <div class="orb-console-wrap">
+            <app-ai-orb
+              size="lg"
+              [state]="launcherHighlighted() ? 'active' : 'idle'"
+              statusText="Talk to CALLNIVO AI • Ready"
+              [enableParallax]="false">
+            </app-ai-orb>
+          </div>
+
+          <!-- Voice Interaction Visualizer Bar -->
+          <div class="acoustic-visualizer" aria-hidden="true">
+            @for (height of visualizerBars; track $index) {
+              <span
+                class="v-bar"
+                [class.is-live]="launcherHighlighted()"
+                [style.height.%]="height"
+                [style.animation-delay]="($index * 0.07) + 's'">
+              </span>
+            }
+          </div>
+
+          <p class="stage-explanation">
+            Click the <strong>“Talk to CALLNIVO AI”</strong> / <strong>“Start Live Demo”</strong> widget launcher in the <strong>bottom-left corner</strong> of your screen to start a live voice conversation.
+          </p>
+
+          <!-- User-Initiated Action Guiding to the Official Native Launcher -->
+          <div class="stage-cta-area">
+            <button
+              type="button"
+              class="btn btn-primary btn-start-demo"
+              (click)="guideToNativeWidget()">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true">
+                <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z" />
+                <path d="M19 10v2a7 7 0 0 1-14 0v-2" />
+                <line x1="12" x2="12" y1="19" y2="22" />
+              </svg>
+              <span>Locate Live Demo Widget ↙</span>
+            </button>
+          </div>
+
+          <!-- Step-by-Step Native Launcher Guide / Highlight Feedback -->
+          <div class="session-feedback-box" role="region" aria-live="polite">
+            @if (!widgetFailed()) {
+              <div class="widget-guide-card" [class.highlighted]="launcherHighlighted()">
+                <div class="guide-header">
+                  <span class="guide-badge">HOW TO START YOUR VOICE CALL</span>
+                  @if (launcherHighlighted()) {
+                    <span class="look-bottom-left">↙ Look at the bottom-left corner</span>
+                  }
+                </div>
+                <ol class="guide-steps">
+                  <li>Click the <strong>Talk to CALLNIVO AI</strong> launcher in the <strong>bottom-left corner</strong>.</li>
+                  <li>Click <strong>Start Live Demo</strong> and accept the terms &amp; microphone prompt.</li>
+                  <li>Speak naturally to test any business scenario, then click <strong>End Demo</strong> when finished.</li>
+                </ol>
+              </div>
+            } @else {
+              <!-- Helpful Fallback State if the Embedded Widget Script is Blocked/Unavailable -->
+              <div class="coming-soon-notice">
+                <div class="notice-header">
+                  <span class="notice-badge">WIDGET FALLBACK</span>
+                  <h4>Embedded Voice Widget Could Not Be Reached</h4>
+                </div>
+                <p>
+                  Your browser or network may be blocking the third-party ElevenLabs widget script (<code>unpkg.com/&#64;elevenlabs/convai-widget-embed</code>), or the current domain is not yet on the agent's security allowlist.
+                </p>
+                @if (hasShareableBackupUrl()) {
+                  <div style="margin-top: 0.85rem;">
+                    <a
+                      [href]="shareableDemoUrl"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="btn btn-secondary">
+                      Open Official Shareable Demo Page ↗
+                    </a>
+                  </div>
+                }
+              </div>
+            }
+          </div>
+
+          <!-- Required Privacy Notice -->
+          <div class="privacy-notice">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+              <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+            </svg>
+            <p>
+              <strong>Privacy Notice:</strong> Starting a voice call in the widget activates ElevenLabs Conversational AI using your microphone and processes conversation audio and transcripts. Microphone access is never requested until you start a call.
+            </p>
+          </div>
+        </div>
+
+        <!-- Right Column: Suggested Example Questions -->
+        <div class="console-prompts">
+          <div class="active-prompt-banner">
+            <div class="banner-top">
+              <span class="banner-label">SELECTED EXAMPLE QUESTION</span>
+              <button
+                type="button"
+                class="btn-copy-prompt"
+                (click)="copySelectedPrompt()">
+                {{ copiedPromptFeedback() ? 'Copied!' : 'Copy Prompt' }}
+              </button>
+            </div>
+            <p class="selected-prompt-text">“{{ uiState.selectedDemoPrompt() }}”</p>
+          </div>
+
+          <h3 class="prompts-heading">Example Questions to Try</h3>
+          <p class="prompts-subheading">
+            Select any example below to copy or say once you open the live voice widget:
+          </p>
+
+          <div class="prompt-cards-grid" role="list">
+            @for (item of samplePrompts; track item.id) {
+              <button
+                type="button"
+                class="prompt-card"
+                [class.active]="uiState.selectedDemoPrompt() === item.prompt"
+                (click)="selectSamplePrompt(item.prompt)">
+                <div class="prompt-card-top">
+                  <span class="prompt-category">{{ item.category }}</span>
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                    <polygon points="5 3 19 12 5 21 5 3" />
+                  </svg>
+                </div>
+                <p class="prompt-quote">“{{ item.prompt }}”</p>
+                <span class="prompt-hint">{{ item.hint }}</span>
+              </button>
+            }
+          </div>
+
+          <!-- Experience Highlights -->
+          <div class="experience-info-card">
+            <h4>Voice Conversation Capabilities</h4>
+            <ul>
+              <li>
+                <span class="bullet-dot"></span>
+                <span>Roleplays dental clinics, restaurants, real estate offices, salons, and more.</span>
+              </li>
+              <li>
+                <span class="bullet-dot"></span>
+                <span>Answers service questions, gathers booking preferences, and handles natural follow-ups.</span>
+              </li>
+              <li>
+                <span class="bullet-dot"></span>
+                <span>User-initiated voice calls only—never autoplays or activates the microphone automatically.</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

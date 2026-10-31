@@ -1,0 +1,122 @@
+<div
+  class="orb-wrapper"
+  [class]="'orb-wrapper size-' + size + ' state-' + effectiveState()"
+  [style.transform]="transformStyle()"
+  role="img"
+  [attr.aria-label]="'CALLNIVO AI Voice Core visualization — ' + statusText">
+
+  <!-- Ambient outer aura layers -->
+  <div class="orb-ambient-glow"></div>
+  <div class="orb-secondary-glow"></div>
+
+  <!-- Concentric rotating SVG orbital geometry -->
+  <svg
+    class="orb-rings-svg"
+    viewBox="0 0 420 420"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    aria-hidden="true">
+    <defs>
+      <linearGradient id="orbRingBlueCyan" x1="0" y1="0" x2="420" y2="420" gradientUnits="userSpaceOnUse">
+        <stop offset="0%" stop-color="#3B82F6" stop-opacity="0.85" />
+        <stop offset="50%" stop-color="#22D3EE" stop-opacity="0.95" />
+        <stop offset="100%" stop-color="#8B5CF6" stop-opacity="0.7" />
+      </linearGradient>
+      <linearGradient id="orbRingViolet" x1="420" y1="0" x2="0" y2="420" gradientUnits="userSpaceOnUse">
+        <stop offset="0%" stop-color="#22D3EE" stop-opacity="0.6" />
+        <stop offset="50%" stop-color="#8B5CF6" stop-opacity="0.85" />
+        <stop offset="100%" stop-color="#3B82F6" stop-opacity="0.15" />
+      </linearGradient>
+      <radialGradient id="orbCoreSphere" cx="38%" cy="32%" r="68%">
+        <stop offset="0%" stop-color="#A5F3FC" stop-opacity="0.95" />
+        <stop offset="28%" stop-color="#22D3EE" stop-opacity="0.88" />
+        <stop offset="62%" stop-color="#3B82F6" stop-opacity="0.82" />
+        <stop offset="88%" stop-color="#8B5CF6" stop-opacity="0.65" />
+        <stop offset="100%" stop-color="#050816" stop-opacity="0.95" />
+      </radialGradient>
+    </defs>
+
+    <!-- Outer telemetry ring -->
+    <g class="ring-layer ring-outer">
+      <circle
+        cx="210"
+        cy="210"
+        r="192"
+        stroke="url(#orbRingBlueCyan)"
+        stroke-width="1.2"
+        stroke-dasharray="8 14 36 14"
+        stroke-opacity="0.48" />
+      <circle cx="210" cy="18" r="4" fill="#22D3EE" />
+      <circle cx="380" cy="300" r="3.5" fill="#8B5CF6" />
+      <circle cx="42" cy="296" r="3" fill="#3B82F6" />
+    </g>
+
+    <!-- Middle counter-rotating harmonic ring -->
+    <g class="ring-layer ring-middle">
+      <circle
+        cx="210"
+        cy="210"
+        r="162"
+        stroke="url(#orbRingViolet)"
+        stroke-width="1.6"
+        stroke-dasharray="72 28 18 28"
+        stroke-opacity="0.65" />
+      <ellipse
+        cx="210"
+        cy="210"
+        rx="162"
+        ry="68"
+        transform="rotate(-28 210 210)"
+        stroke="url(#orbRingBlueCyan)"
+        stroke-width="1.1"
+        stroke-opacity="0.38" />
+      <ellipse
+        cx="210"
+        cy="210"
+        rx="162"
+        ry="68"
+        transform="rotate(32 210 210)"
+        stroke="url(#orbRingViolet)"
+        stroke-width="1.1"
+        stroke-opacity="0.35" />
+    </g>
+
+    <!-- Inner high-energy acoustic ring -->
+    <g class="ring-layer ring-inner">
+      <circle
+        cx="210"
+        cy="210"
+        r="130"
+        stroke="url(#orbRingBlueCyan)"
+        stroke-width="2"
+        stroke-dasharray="48 18"
+        stroke-linecap="round"
+        stroke-opacity="0.82" />
+    </g>
+  </svg>
+
+  <!-- Central Energy Sphere -->
+  <div class="orb-core">
+    <div class="orb-core-plasma"></div>
+    <div class="orb-core-sheen"></div>
+
+    <!-- Subtle Acoustic Waveform Visualization Inside Core -->
+    <div class="orb-waveform" aria-hidden="true">
+      @for (bar of waveformBars; track $index) {
+        <span
+          class="wave-bar"
+          [style.animation-delay]="bar.delay"
+          [style.--base-height.%]="bar.height">
+        </span>
+      }
+    </div>
+  </div>
+
+  <!-- Floating Status Pill -->
+  @if (showStatusPill) {
+    <div class="orb-status-pill">
+      <span class="status-indicator"></span>
+      <span class="status-label">{{ statusText }}</span>
+    </div>
+  }
+</div>

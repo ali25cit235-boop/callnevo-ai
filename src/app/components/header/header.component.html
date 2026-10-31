@@ -1,0 +1,119 @@
+<header
+  class="site-header"
+  [class.is-scrolled]="isScrolled()"
+  [class.menu-open]="mobileMenuOpen()"
+  role="banner">
+  <div class="header-container">
+    <nav class="navbar-pill" aria-label="Primary Navigation">
+      <!-- Brand Identity -->
+      <a
+        href="#home"
+        class="brand-logo"
+        (click)="navigateTo(brand.navItems[0], $event)"
+        aria-label="CALLNIVO AI — Go to top of page">
+        <span class="logo-mark" aria-hidden="true">
+          <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="navLogoGrad" x1="2" y1="2" x2="34" y2="34" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#3B82F6" />
+                <stop offset="50%" stop-color="#22D3EE" />
+                <stop offset="100%" stop-color="#8B5CF6" />
+              </linearGradient>
+            </defs>
+            <rect x="1.5" y="1.5" width="33" height="33" rx="10" fill="#0B1022" stroke="url(#navLogoGrad)" stroke-width="1.8" />
+            <path d="M11 18V18M14.5 13.5V22.5M18 10V26M21.5 13.5V22.5M25 16.5V19.5" stroke="url(#navLogoGrad)" stroke-width="2.4" stroke-linecap="round" />
+          </svg>
+        </span>
+        <span class="brand-text">
+          <span class="brand-main">CALLNIVO</span>
+          <span class="brand-ai">AI</span>
+        </span>
+      </a>
+
+      <!-- Desktop Navigation Links -->
+      <ul class="nav-links" role="list">
+        @for (item of brand.navItems; track item.sectionId) {
+          <li>
+            <a
+              [href]="'#' + item.sectionId"
+              class="nav-link"
+              [class.active]="uiState.activeSection() === item.sectionId"
+              [attr.aria-current]="uiState.activeSection() === item.sectionId ? 'page' : null"
+              (click)="navigateTo(item, $event)">
+              {{ item.label }}
+            </a>
+          </li>
+        }
+      </ul>
+
+      <!-- Right-side CTA & Mobile Toggle -->
+      <div class="nav-actions">
+        <a
+          href="#live-demo"
+          class="btn-nav-cta"
+          (click)="goToLiveDemo($event)">
+          <span class="cta-pulse" aria-hidden="true"></span>
+          <span>Try Live Demo</span>
+        </a>
+
+        <button
+          type="button"
+          class="mobile-menu-toggle"
+          (click)="toggleMobileMenu()"
+          [attr.aria-expanded]="mobileMenuOpen()"
+          aria-controls="mobile-navigation-drawer"
+          aria-label="Toggle navigation menu">
+          <span class="hamburger-bar" [class.open]="mobileMenuOpen()"></span>
+          <span class="hamburger-bar" [class.open]="mobileMenuOpen()"></span>
+          <span class="hamburger-bar" [class.open]="mobileMenuOpen()"></span>
+        </button>
+      </div>
+    </nav>
+
+    <!-- Mobile Responsive Navigation Drawer -->
+    @if (mobileMenuOpen()) {
+      <div
+        id="mobile-navigation-drawer"
+        class="mobile-drawer"
+        role="dialog"
+        aria-label="Mobile Navigation Menu">
+        <ul class="mobile-nav-list" role="list">
+          @for (item of brand.navItems; track item.sectionId) {
+            <li>
+              <a
+                [href]="'#' + item.sectionId"
+                class="mobile-nav-link"
+                [class.active]="uiState.activeSection() === item.sectionId"
+                (click)="navigateTo(item, $event)">
+                <span>{{ item.label }}</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <path d="M5 12h14M12 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+              </a>
+            </li>
+          }
+        </ul>
+        <div class="mobile-drawer-footer">
+          <a
+            href="#live-demo"
+            class="btn btn-primary mobile-cta-full"
+            (click)="goToLiveDemo($event)">
+            Try Live Demo
+          </a>
+          <a
+            [href]="brand.whatsapp.chatUrl"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn btn-secondary mobile-whatsapp-cta"
+            (click)="mobileMenuOpen.set(false)"
+            [attr.aria-label]="'Chat with CALLNIVO AI on WhatsApp at ' + brand.whatsapp.displayNumber">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M12.031 2C6.508 2 2.023 6.485 2.023 12.008c0 1.766.461 3.49 1.337 5.011L2 22l5.122-1.343a9.969 9.969 0 0 0 4.909 1.298h.004c5.522 0 10.007-4.485 10.007-10.008 0-2.674-1.041-5.188-2.931-7.079A9.946 9.946 0 0 0 12.031 2Zm5.847 14.326c-.246.693-1.434 1.326-1.995 1.409-.511.076-1.158.108-1.869-.118-.431-.137-.983-.32-1.693-.627-2.98-1.287-4.926-4.29-5.075-4.488-.148-.198-1.211-1.612-1.211-3.074 0-1.463.766-2.182 1.038-2.479.272-.298.594-.372.792-.372.198 0 .396.002.569.01.183.009.427-.069.668.511.248.595.841 2.056.915 2.205.075.149.124.322.025.52-.099.198-.148.322-.297.495-.148.174-.312.388-.445.521-.149.148-.304.309-.131.606.173.297.769 1.269 1.651 2.055 1.135 1.012 2.091 1.326 2.388 1.475.297.148.47.124.643-.075.174-.198.742-.866.94-1.163.198-.298.396-.248.668-.149.273.099 1.732.817 2.029.966.297.148.495.223.569.346.074.124.074.718-.173 1.411Z" />
+            </svg>
+            <span>WhatsApp: {{ brand.whatsapp.displayNumber }}</span>
+          </a>
+        </div>
+      </div>
+    }
+  </div>
+</header>

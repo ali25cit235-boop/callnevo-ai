@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" fill="none">
+  <defs>
+    <radialGradient id="bgGlow1" cx="25%" cy="30%" r="60%">
+      <stop offset="0%" stop-color="#3B82F6" stop-opacity="0.45"/>
+      <stop offset="100%" stop-color="#050816" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="bgGlow2" cx="75%" cy="55%" r="55%">
+      <stop offset="0%" stop-color="#22D3EE" stop-opacity="0.38"/>
+      <stop offset="100%" stop-color="#050816" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="waveLine" x1="0" y1="360" x2="1280" y2="360" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#3B82F6" stop-opacity="0.1"/>
+      <stop offset="50%" stop-color="#22D3EE" stop-opacity="0.75"/>
+      <stop offset="100%" stop-color="#8B5CF6" stop-opacity="0.15"/>
+    </linearGradient>
+  </defs>
+  <rect width="1280" height="720" fill="#050816"/>
+  <rect width="1280" height="720" fill="url(#bgGlow1)"/>
+  <rect width="1280" height="720" fill="url(#bgGlow2)"/>
+  <path d="M0 420 C 320 260, 640 540, 1280 320" stroke="url(#waveLine)" stroke-width="3" fill="none"/>
+  <path d="M0 350 C 420 510, 820 210, 1280 410" stroke="url(#waveLine)" stroke-width="2" stroke-opacity="0.6" fill="none"/>
+</svg>

@@ -1,0 +1,215 @@
+<section
+  #industriesSection
+  id="industries"
+  class="industries-section section-padding"
+  aria-labelledby="industries-section-title">
+  <div class="container">
+    <!-- Section Header -->
+    <div class="section-header">
+      <div class="eyebrow-badge ind-header-reveal">
+        <span class="pulse-dot" aria-hidden="true"></span>
+        <span>INDUSTRY SHOWCASE</span>
+      </div>
+      <h2 id="industries-section-title" class="section-title ind-header-reveal">
+        Built Around
+        <span class="text-gradient">Your Business.</span>
+      </h2>
+      <p class="section-subtitle ind-header-reveal">
+        Select an industry below to explore how a CALLNIVO AI receptionist greets callers, handles domain-specific questions, and organizes customer requests.
+      </p>
+    </div>
+
+    <!-- Interactive Industry Cards Grid (All 8 Industries) -->
+    <div class="industries-cards-grid" role="tablist" aria-label="Select an industry example">
+      @for (ind of industries; track ind.id) {
+        <article
+          class="industry-card glass-panel"
+          [class.selected]="selectedIndustry().id === ind.id"
+          role="tab"
+          tabindex="0"
+          [attr.aria-selected]="selectedIndustry().id === ind.id"
+          (click)="selectIndustry(ind)"
+          (keydown.enter)="selectIndustry(ind)"
+          (keydown.space)="selectIndustry(ind); $event.preventDefault()">
+
+          <div class="ind-card-top">
+            <div class="ind-illustration-badge" aria-hidden="true">
+              @switch (ind.icon) {
+                @case ('dental') {
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9">
+                    <path d="M7 3C4.8 3 3 4.8 3 7c0 2.4 1.2 4.3 2 6.5.7 2 1.1 5.5 2.5 5.5 1.2 0 1.6-3 3.5-3s2.3 3 3.5 3c1.4 0 1.8-3.5 2.5-5.5.8-2.2 2-4.1 2-6.5 0-2.2-1.8-4-4-4-1.5 0-2.8.8-4 1.5C10.8 3.8 8.5 3 7 3z" />
+                  </svg>
+                }
+                @case ('salon') {
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9">
+                    <circle cx="6" cy="6" r="3" />
+                    <circle cx="6" cy="18" r="3" />
+                    <line x1="20" y1="4" x2="8.12" y2="15.88" />
+                    <line x1="14.47" y1="14.48" x2="20" y2="20" />
+                    <line x1="8.12" y1="8.12" x2="12" y2="12" />
+                  </svg>
+                }
+                @case ('restaurant') {
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9">
+                    <path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2" />
+                    <path d="M7 2v20" />
+                    <path d="M21 15V2v0a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7" />
+                  </svg>
+                }
+                @case ('realestate') {
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                    <polyline points="9 22 9 12 15 12 15 22" />
+                  </svg>
+                }
+                @case ('homeservices') {
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9">
+                    <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z" />
+                  </svg>
+                }
+                @case ('dealership') {
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9">
+                    <path d="M14 16H9m10 0h3v-3.15a1 1 0 0 0-.84-.99L16 11l-2.7-3.6a1 1 0 0 0-.8-.4H5.24a2 2 0 0 0-1.8 1.1l-.8 1.63A6 6 0 0 0 2 12.42V16h2" />
+                    <circle cx="6.5" cy="16.5" r="2.5" />
+                    <circle cx="16.5" cy="16.5" r="2.5" />
+                  </svg>
+                }
+                @case ('medical') {
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9">
+                    <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
+                  </svg>
+                }
+                @default {
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9">
+                    <rect x="2" y="7" width="20" height="14" rx="2" ry="2" />
+                    <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
+                  </svg>
+                }
+              }
+            </div>
+            <span class="ind-category-tag">{{ ind.categoryTag }}</span>
+          </div>
+
+          <h3 class="ind-name">{{ ind.name }}</h3>
+
+          <!-- Mini Preview Snippet on Every Card -->
+          <div class="ind-snippet-box">
+            <div class="snippet-line caller">
+              <span class="speaker-tag">Caller:</span>
+              <span class="snippet-text">“{{ ind.customerQuestion }}”</span>
+            </div>
+            <div class="snippet-line ai">
+              <span class="speaker-tag">AI:</span>
+              <span class="snippet-text">“{{ ind.aiResponse }}”</span>
+            </div>
+          </div>
+
+          <div class="ind-card-footer">
+            <span class="view-script-hint">
+              {{ selectedIndustry().id === ind.id ? 'Viewing Conversation Below' : 'Click to Preview Script' }}
+            </span>
+            <button
+              type="button"
+              class="btn-explore-demo"
+              (click)="exploreInLiveDemo(ind, $event)">
+              <span>Explore Demo</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true">
+                <path d="M5 12h14M12 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </button>
+          </div>
+        </article>
+      }
+    </div>
+
+    <!-- Interactive Sample Conversation Showcase Panel -->
+    @if (selectedIndustry(); as activeInd) {
+      <div class="conversation-showcase glass-panel" role="tabpanel" [attr.aria-label]="activeInd.name + ' example conversation'">
+        <div class="showcase-header">
+          <div class="showcase-title-wrap">
+            <span class="industry-active-pill">{{ activeInd.name }}</span>
+            <h3 class="showcase-heading">Interactive Sample Conversation</h3>
+          </div>
+
+          <!-- Required Explicit Indicator: "Example conversation" -->
+          <div class="example-disclaimer-badge">
+            <span class="badge-dot" aria-hidden="true"></span>
+            <span>Example conversation • Scripted demonstration</span>
+          </div>
+        </div>
+
+        <div class="showcase-body-grid">
+          <!-- Left: Multi-Turn Scripted Dialogue -->
+          <div class="dialogue-stream">
+            @for (turn of activeInd.conversation; track $index) {
+              <div class="chat-turn" [class.turn-ai]="turn.speaker === 'ai'" [class.turn-customer]="turn.speaker === 'customer'">
+                <div class="turn-avatar" aria-hidden="true">
+                  @if (turn.speaker === 'customer') {
+                    <span>Caller</span>
+                  } @else {
+                    <span>AI</span>
+                  }
+                </div>
+                <div class="turn-bubble-wrap">
+                  <div class="turn-speaker-row">
+                    <span class="speaker-name">
+                      {{ turn.speaker === 'customer' ? 'Customer' : 'CALLNIVO AI Receptionist' }}
+                    </span>
+                    @if (turn.annotation) {
+                      <span class="turn-annotation">{{ turn.annotation }}</span>
+                    }
+                  </div>
+                  <p class="turn-message">“{{ turn.text }}”</p>
+                </div>
+              </div>
+            }
+          </div>
+
+          <!-- Right: Organized Output Card & Live Demo Handoff -->
+          <div class="captured-output-panel">
+            <div class="output-card">
+              <div class="output-header">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#22D3EE" stroke-width="2.2" aria-hidden="true">
+                  <polyline points="9 11 12 14 22 4" />
+                  <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" />
+                </svg>
+                <span>Captured Call Summary</span>
+              </div>
+
+              <p class="output-context">{{ activeInd.summary }}</p>
+
+              <dl class="output-fields">
+                <div class="field-row">
+                  <dt>Detected Intent</dt>
+                  <dd>{{ activeInd.capturedSummary.intent }}</dd>
+                </div>
+                <div class="field-row">
+                  <dt>Caller Context</dt>
+                  <dd>{{ activeInd.capturedSummary.callerStatus }}</dd>
+                </div>
+                <div class="field-row">
+                  <dt>Requested Timing</dt>
+                  <dd>{{ activeInd.capturedSummary.requestedTiming }}</dd>
+                </div>
+                <div class="field-row">
+                  <dt>Action Note</dt>
+                  <dd>{{ activeInd.capturedSummary.followUpNote }}</dd>
+                </div>
+              </dl>
+
+              <button
+                type="button"
+                class="btn btn-primary w-full"
+                (click)="exploreInLiveDemo(activeInd, $event)">
+                <span>Try This Scenario in Live Demo</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true">
+                  <path d="M5 12h14M12 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    }
+  </div>
+</section>
